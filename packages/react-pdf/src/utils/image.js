@@ -56,10 +56,14 @@ export const fetchImage = src => {
           extension = 'png';
         } else if (isJpg) {
           extension = 'jpg';
-        } else reject(new Error('Not valid image extension'));
+        } else return reject(new Error('Not valid image extension'));
 
-        const image = getImage(body, extension);
-        return resolve(image);
+        try {
+          const image = getImage(body, extension);
+          return resolve(image);
+        } catch (e) {
+          return reject(e);
+        }
       },
     );
   });
